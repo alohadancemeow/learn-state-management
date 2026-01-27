@@ -46,7 +46,15 @@ export default function ProductsPage() {
       title: 'Thumbnail',
       dataIndex: 'thumbnail',
       key: 'thumbnail',
-      render: (text: string) => <img src={text} alt="product" style={{ width: 50, height: 50, objectFit: 'cover' }} />,
+      render: (text: string) => (
+        <img
+          src={text}
+          alt="product"
+          width={50}
+          height={50}
+          style={{ objectFit: 'cover' }}
+        />
+      ),
     },
     {
       title: 'Title',
@@ -69,27 +77,27 @@ export default function ProductsPage() {
       key: 'actions',
       render: (_: any, record: any) => (
         <Space size="middle">
-          <Button 
-            icon={<EyeOutlined />} 
-            onClick={() => router.push(`/dashboard/products/${record.id}`)} 
+          <Button
+            icon={<EyeOutlined />}
+            onClick={() => router.push(`/dashboard/products/${record.id}`)}
           />
-           <Button 
+          <Button
             type="default"
             onClick={() => {
-                dispatch(addToCart({
-                    id: record.id,
-                    title: record.title,
-                    price: record.price,
-                    thumbnail: record.thumbnail,
-                    quantity: 1
-                }));
-                message.success('Added to cart');
+              dispatch(addToCart({
+                id: record.id,
+                title: record.title,
+                price: record.price,
+                thumbnail: record.thumbnail,
+                quantity: 1
+              }));
+              message.success('Added to cart');
             }}
           >
             Add to Cart
           </Button>
-          <Button 
-            icon={<EditOutlined />} 
+          <Button
+            icon={<EditOutlined />}
             onClick={() => router.push(`/dashboard/products/${record.id}/edit`)}
           />
           <Popconfirm
@@ -117,16 +125,16 @@ export default function ProductsPage() {
           }}
           onChange={(e) => {
             if (e.target.value === '') {
-                setSearchTerm('');
+              setSearchTerm('');
             }
           }}
           style={{ width: 300 }}
           allowClear
         />
-        <Button 
-            type="primary" 
-            icon={<PlusOutlined />}
-            onClick={() => router.push('/dashboard/products/create')}
+        <Button
+          type="primary"
+          icon={<PlusOutlined />}
+          onClick={() => router.push('/dashboard/products/create')}
         >
           Add Product
         </Button>

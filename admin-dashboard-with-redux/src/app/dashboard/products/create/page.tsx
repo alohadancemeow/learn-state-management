@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import { Card, Typography, App, Button } from 'antd';
 import { ProductForm } from '@/components/forms/ProductForm';
 import { useAddProductMutation } from '@/store/api/productsApi';
