@@ -2,6 +2,7 @@
 
 import { useGenres } from '@/hooks/useGenres';
 import { useSearchStore } from '@/store/useSearchStore';
+import { Radio, Space } from 'antd';
 
 export default function GenreFilter() {
   const { data: genresData } = useGenres();
@@ -10,30 +11,21 @@ export default function GenreFilter() {
   if (!genresData?.genres) return null;
 
   return (
-    <div className="flex flex-wrap gap-2 justify-center mb-8">
-      <button
-        onClick={() => setSelectedGenre(null)}
-        className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-          selectedGenre === null
-            ? 'bg-blue-500 text-white'
-            : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'
-        }`}
-      >
-        All
-      </button>
-      {genresData.genres.map((genre) => (
-        <button
-          key={genre.id}
-          onClick={() => setSelectedGenre(genre.id)}
-          className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-            selectedGenre === genre.id
-              ? 'bg-blue-500 text-white'
-              : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'
-          }`}
+    <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 32 }}>
+      <Space wrap>
+        <Radio.Group
+          value={selectedGenre}
+          onChange={(e) => setSelectedGenre(e.target.value)}
+          buttonStyle="solid"
         >
-          {genre.name}
-        </button>
-      ))}
+          <Radio.Button value={''}>All</Radio.Button>
+          {genresData.genres.map((genre) => (
+            <Radio.Button key={genre.id} value={genre.id}>
+              {genre.name}
+            </Radio.Button>
+          ))}
+        </Radio.Group>
+      </Space>
     </div>
   );
 }

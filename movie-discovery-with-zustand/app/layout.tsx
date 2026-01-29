@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Providers from "./providers";
-import ThemeToggle from "@/components/ThemeToggle";
-import Link from "next/link";
+import AntdRegistry from "@/lib/AntdRegistry";
+import MainLayout from "@/components/MainLayout";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,22 +28,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        style={{ margin: 0, padding: 0 }}
       >
-        <Providers>
-          <header className="bg-white dark:bg-gray-800 shadow-sm">
-            <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-              <Link href="/" className="text-xl font-bold bg-clip-text text-transparent bg-linear-to-r from-blue-500 to-teal-400">
-                MovieDiscovery
-              </Link>
-              <div className="flex items-center gap-4">
-                <Link href="/" className="hover:text-blue-500 transition-colors">Home</Link>
-                <ThemeToggle />
-              </div>
-            </div>
-          </header>
-          {children}
-        </Providers>
+        <AntdRegistry>
+          <Providers>
+            <MainLayout>
+              {children}
+            </MainLayout>
+          </Providers>
+        </AntdRegistry>
       </body>
     </html>
   );

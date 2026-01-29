@@ -8,10 +8,13 @@ import MovieCard from '@/components/MovieCard';
 import SearchBar from '@/components/SearchBar';
 import GenreFilter from '@/components/GenreFilter';
 import MovieSkeleton from '@/components/MovieSkeleton';
+import { Typography, Alert, Empty } from 'antd';
+
+const { Title } = Typography;
 
 export default function Home() {
   const { searchQuery, selectedGenre } = useSearchStore();
-  
+
   const trendingQuery = useTrendingMovies();
   const searchQueryResult = useSearchMovies(searchQuery);
   const discoverQuery = useDiscoverMovies(selectedGenre);
@@ -34,42 +37,44 @@ export default function Home() {
   const { data, isLoading, error } = currentQuery;
 
   return (
-    <main className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-8 text-center">Movie Discovery</h1>
-      
+    <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+      <Title level={2} style={{ textAlign: 'center', marginBottom: 32 }}>Movie Discovery</Title>
+
       <SearchBar />
       {!searchQuery && <GenreFilter />}
 
-      {isLoading && (
+      {error && (
+        <Alert
+          title="Error"
+          description="Error loading movies. Please try again later."
+          type="error"
+          showIcon
+          style={{ marginBottom: 24 }}
+        />
+      )}
+
+      {isLoading ? (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-          {[...Array(10)].map((_, i) => (
-            <MovieSkeleton key={i} />
+          {[...Array(10)].map((_, index) => (
+            <div key={index}>
+              <MovieSkeleton />
+            </div>
           ))}
         </div>
-      )}
-
-      {error && (
-        <div className="text-center text-red-500 p-8">
-          Error loading movies. Please try again later.
-        </div>
-      )}
-
-      {!isLoading && !error && data?.results.length === 0 && (
-        <div className="text-center text-gray-500 p-8">
-          No movies found.
-        </div>
-      )}
-
-      {!isLoading && !error && (
+      ) : !error && data?.results.length === 0 ? (
+        <Empty description="No movies found" />
+      ) : (
         <>
-          <h2 className="text-xl font-semibold mb-6">{title}</h2>
+          <Title level={3} style={{ marginBottom: 24 }}>{title}</Title>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
             {data?.results.map((movie) => (
-              <MovieCard key={movie.id} movie={movie} />
+              <div key={movie.id}>
+                <MovieCard movie={movie} />
+              </div>
             ))}
           </div>
         </>
       )}
-    </main>
+    </div>
   );
 }
