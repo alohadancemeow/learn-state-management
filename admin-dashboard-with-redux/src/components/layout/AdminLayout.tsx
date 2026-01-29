@@ -17,10 +17,19 @@ import { useRouter, usePathname } from 'next/navigation';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { logout } from '@/store/slices/authSlice';
 import { toggleCollapsed, toggleTheme } from '@/store/slices/uiSlice';
-import Link from 'next/link';
 
 const { Header, Sider, Content } = Layout;
 
+/**
+ * The main layout component for the admin dashboard.
+ * 
+ * It provides a consistent structure including a collapsible sidebar navigation,
+ * a header with user info and theme toggle, and a content area for child pages.
+ * 
+ * It also handles authentication protection: redirects to /login if the user is not authenticated.
+ * 
+ * @param children - The content to be rendered within the layout
+ */
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
@@ -32,6 +41,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     token: { colorBgContainer, borderRadiusLG },
   } = antTheme.useToken();
 
+  // Protect the route: Redirect to login if not authenticated
   useEffect(() => {
     if (!isAuthenticated) {
       router.push('/login');
@@ -42,6 +52,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     return null; 
   }
 
+  // Handle user logout
   const handleLogout = () => {
     dispatch(logout());
     router.push('/login');

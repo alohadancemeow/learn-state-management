@@ -13,6 +13,11 @@ export default function CreateProductPage() {
   const [addProduct, { isLoading }] = useAddProductMutation();
   const router = useRouter();
 
+  /**
+   * Handles form submission to create a new product.
+   * 
+   * @param values - Form values from the ProductForm component
+   */
   const handleFinish = async (values: any) => {
     try {
       await addProduct(values).unwrap();

@@ -10,6 +10,9 @@ export default function SuccessPage() {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
+  /**
+   * Clears the cart after a successful purchase.
+   */
   useEffect(() => {
     dispatch(clearCart());
   }, [dispatch]);

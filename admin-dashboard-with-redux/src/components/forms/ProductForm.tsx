@@ -4,14 +4,26 @@ import React, { useEffect } from 'react';
 import { Form, Input, InputNumber, Button } from 'antd';
 
 interface ProductFormProps {
+  /** Initial values for the form fields, used when editing an existing product */
   initialValues?: any;
+  /** Callback function triggered when the form is successfully submitted */
   onFinish: (values: any) => void;
+  /** Flag to indicate if the form submission is in progress */
   isLoading: boolean;
 }
 
+/**
+ * A form component for creating or editing a product.
+ * 
+ * It uses Ant Design's Form component and includes validation rules.
+ * If 'initialValues' are provided, the form fields are populated, suitable for "Edit" mode.
+ * 
+ * @param props - Component props including initialValues, onFinish callback, and loading state
+ */
 export const ProductForm: React.FC<ProductFormProps> = ({ initialValues, onFinish, isLoading }) => {
   const [form] = Form.useForm();
 
+  // Populate form fields when initialValues change (e.g., when data is fetched for editing)
   useEffect(() => {
     if (initialValues) {
       form.setFieldsValue(initialValues);

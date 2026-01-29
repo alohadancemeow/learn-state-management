@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import { Card, Typography, App, Button, Spin } from 'antd';
 import { ProductForm } from '@/components/forms/ProductForm';
 import { useGetProductByIdQuery, useUpdateProductMutation } from '@/store/api/productsApi';

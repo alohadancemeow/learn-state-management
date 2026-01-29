@@ -1,10 +1,7 @@
 'use client';
 
-import React from 'react';
-import { Result, Button, Typography } from 'antd';
+import { Result, Button } from 'antd';
 import { useRouter } from 'next/navigation';
-
-const { Paragraph, Text } = Typography;
 
 export default function CancelPage() {
   const router = useRouter();

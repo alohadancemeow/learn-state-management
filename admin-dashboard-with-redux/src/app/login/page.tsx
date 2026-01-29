@@ -17,12 +17,22 @@ export default function LoginPage() {
   const router = useRouter();
   const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
 
+  // Redirect to dashboard if the user is already authenticated
   useEffect(() => {
     if (isAuthenticated) {
       router.push('/dashboard');
     }
   }, [isAuthenticated, router]);
 
+  /**
+   * Handles the login form submission.
+   * 
+   * 1. Calls the login API with provided credentials.
+   * 2. On success, dispatches setCredentials to update the Redux store.
+   * 3. Redirects the user to the dashboard.
+   * 
+   * @param values - Form values containing username and password
+   */
   const onFinish = async (values: any) => {
     try {
       const user = await login(values).unwrap();

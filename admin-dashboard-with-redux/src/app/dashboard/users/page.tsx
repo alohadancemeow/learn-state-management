@@ -11,6 +11,12 @@ export default function UsersPage() {
   const [pageSize, setPageSize] = useState(10);
   const router = useRouter();
 
+  /**
+   * Fetches users from the API based on current pagination.
+   * 
+   * @param limit - Number of items per page
+   * @param skip - Number of items to skip (calculated from page number)
+   */
   const { data, isLoading, isFetching } = useGetUsersQuery({
     limit: pageSize,
     skip: (page - 1) * pageSize,
@@ -54,9 +60,9 @@ export default function UsersPage() {
       key: 'actions',
       render: (_: any, record: any) => (
         <Space size="middle">
-          <Button 
-            icon={<EyeOutlined />} 
-            onClick={() => router.push(`/dashboard/users/${record.id}`)} 
+          <Button
+            icon={<EyeOutlined />}
+            onClick={() => router.push(`/dashboard/users/${record.id}`)}
           />
         </Space>
       ),

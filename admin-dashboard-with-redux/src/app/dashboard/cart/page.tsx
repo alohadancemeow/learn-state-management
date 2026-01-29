@@ -18,6 +18,13 @@ export default function CartPage() {
   const { items, totalAmount, totalQuantity } = useAppSelector((state) => state.cart);
   const [isCheckingOut, setIsCheckingOut] = useState(false);
 
+  /**
+   * Handles the checkout process.
+   * 
+   * 1. Validates the Stripe Publishable Key.
+   * 2. Sends the cart items to the backend API to create a checkout session.
+   * 3. Redirects the user to the Stripe Checkout page.
+   */
   const handleCheckout = async () => {
     if (!process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY) {
       message.error('Stripe Publishable Key is missing in environment variables');
@@ -25,6 +32,12 @@ export default function CartPage() {
     }
     setIsCheckingOut(true);
     try {
+      /**
+       * Sends the cart items to the backend API to create a checkout session.
+       * 
+       * @param items - Array of cart items to be checked out
+       * @returns NextResponse object with the session ID and URL
+       */
       const response = await fetch('/api/checkout_sessions', {
         method: 'POST',
         headers: {

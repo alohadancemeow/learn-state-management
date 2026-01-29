@@ -12,12 +12,21 @@ const { Search } = Input;
 
 export default function ProductsPage() {
   const { message } = App.useApp();
+  // Pagination state
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
+  // Search state
   const [searchTerm, setSearchTerm] = useState('');
   const router = useRouter();
   const dispatch = useAppDispatch();
 
+  /**
+   * Fetches products from the API based on current pagination and search criteria.
+   * 
+   * @param limit - Number of items per page
+   * @param skip - Number of items to skip (calculated from page number)
+   * @param q - Search query string
+   */
   const { data, isLoading, isFetching } = useGetProductsQuery({
     limit: pageSize,
     skip: (page - 1) * pageSize,
@@ -26,6 +35,13 @@ export default function ProductsPage() {
 
   const [deleteProduct] = useDeleteProductMutation();
 
+  /**
+   * Handles the deletion of a product.
+   * 
+   * Calls the deleteProduct mutation and displays a success/error message.
+   * 
+   * @param id - The ID of the product to delete
+   */
   const handleDelete = async (id: number) => {
     try {
       await deleteProduct(id).unwrap();
@@ -35,6 +51,7 @@ export default function ProductsPage() {
     }
   };
 
+  // Table columns configuration for Ant Design Table
   const columns = [
     {
       title: 'ID',
