@@ -11,6 +11,16 @@ import { HeartOutlined, HeartFilled, ArrowLeftOutlined } from '@ant-design/icons
 
 const { Title, Paragraph, Text } = Typography;
 
+/**
+ * Movie Detail Page.
+ * 
+ * Displays comprehensive information about a specific movie, including:
+ * - Backdrop and Poster images.
+ * - Title, Tagline, Genres, Runtime, Status, and Overview.
+ * - Rating (converted to 5-star scale).
+ * - Action to add/remove from favorites.
+ * 
+ */
 export default function MoviePage({ params }: { params: Promise<{ id: string }> }) {
   // Unwrap params using React.use()
   const { id } = use(params);
@@ -19,6 +29,7 @@ export default function MoviePage({ params }: { params: Promise<{ id: string }> 
   const { isFavorite, toggleFavorite } = useFavoriteStore();
 
   // We need to handle hydration for the favorite button to match server/client
+  // because local storage (where favorites are kept) is only available on the client.
   const [isClient, setIsClient] = useState(false);
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -48,7 +59,7 @@ export default function MoviePage({ params }: { params: Promise<{ id: string }> 
 
   return (
     <div>
-      {/* Backdrop */}
+      {/* Backdrop Section */}
       <div style={{ position: 'relative', width: '100%', height: '40vh', marginBottom: -100 }}>
         <Image
           src={getImageUrl(movie.backdrop_path, 'original')}
@@ -62,7 +73,7 @@ export default function MoviePage({ params }: { params: Promise<{ id: string }> 
 
       <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 24px', position: 'relative', zIndex: 1, paddingBottom: 48 }}>
         <Row gutter={[48, 48]}>
-          {/* Poster */}
+          {/* Poster Section */}
           <Col xs={24} md={8} lg={6}>
             <Card
               hoverable
@@ -80,7 +91,7 @@ export default function MoviePage({ params }: { params: Promise<{ id: string }> 
             </Card>
           </Col>
 
-          {/* Details */}
+          {/* Details Section */}
           <Col xs={24} md={16} lg={18} style={{ paddingTop: 32 }}>
             <Title level={1} style={{ marginBottom: 8 }}>{movie.title}</Title>
             <Paragraph type="secondary" style={{ fontSize: 18, fontStyle: 'italic', marginBottom: 24 }}>

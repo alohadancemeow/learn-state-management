@@ -15,10 +15,24 @@ interface MovieCardProps {
   movie: Movie;
 }
 
+/**
+ * Component to display a single movie card.
+ * 
+ * Features:
+ * - Displays movie poster, title, release year, and rating.
+ * - Links to the movie details page.
+ * - Allows toggling "favorite" status via a heart icon.
+ */
 export default function MovieCard({ movie }: MovieCardProps) {
   const { isFavorite, toggleFavorite } = useFavoriteStore();
   const favorite = isFavorite(movie.id);
 
+  /**
+   * Handles the click on the favorite button.
+   * Prevents navigation to the movie details page.
+   * 
+   * @param {React.MouseEvent} e - The click event.
+   */
   const handleToggleFavorite = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();

@@ -4,6 +4,12 @@ import { useGenres } from '@/hooks/useGenres';
 import { useSearchStore } from '@/store/useSearchStore';
 import { Radio, Space } from 'antd';
 
+/**
+ * Component for filtering movies by genre.
+ * 
+ * Fetches available genres from TMDB and renders them as a radio group.
+ * Updates the global search store with the selected genre ID.
+ */
 export default function GenreFilter() {
   const { data: genresData } = useGenres();
   const { selectedGenre, setSelectedGenre } = useSearchStore();

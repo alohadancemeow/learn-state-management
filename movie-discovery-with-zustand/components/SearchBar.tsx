@@ -5,11 +5,20 @@ import { useSearchStore } from '@/store/useSearchStore';
 import { Input } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 
+/**
+ * Component for searching movies.
+ * 
+ * Features:
+ * - Text input for search queries.
+ * - Debounces user input by 500ms to avoid excessive API calls/store updates.
+ * - Updates the global search store.
+ */
 export default function SearchBar() {
   const { searchQuery, setSearchQuery } = useSearchStore();
   const [localQuery, setLocalQuery] = useState(searchQuery);
 
   useEffect(() => {
+    // Debounce the search query update
     const handler = setTimeout(() => {
       setSearchQuery(localQuery);
     }, 500);

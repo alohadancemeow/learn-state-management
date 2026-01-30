@@ -2,6 +2,12 @@
 
 import { Card, Skeleton } from 'antd';
 
+/**
+ * Loading skeleton component for movie cards.
+ * 
+ * Displays a placeholder card with a shimmering effect while data is loading.
+ * Matches the dimensions and layout of the actual MovieCard.
+ */
 export default function MovieSkeleton() {
   return (
     <Card
