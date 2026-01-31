@@ -5,6 +5,22 @@ import { ForecastData, ForecastPoint } from '@/types/weather';
 const API_KEY = process.env.OPENWEATHER_API_KEY;
 const BASE_URL = 'https://api.openweathermap.org/data/2.5/forecast';
 
+/**
+ * GET Handler for Forecast API
+ * 
+ * Proxies requests to the OpenWeatherMap Forecast API to fetch 5-day weather trends.
+ * 
+ * @param {Request} request - The incoming request object.
+ * @returns {Promise<NextResponse>} JSON response with forecast data or error.
+ * 
+ * Query Parameters:
+ * - city: The name of the city to fetch forecast for.
+ * 
+ * Logic:
+ * - Fetches raw 3-hour interval data from OpenWeatherMap.
+ * - Filters data to approximate daily readings (every 8th entry, ~24 hours).
+ * - Returns a list of 5 daily forecast points.
+ */
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const city = searchParams.get('city');

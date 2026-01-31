@@ -5,6 +5,25 @@ import { WeatherData } from '@/types/weather';
 const API_KEY = process.env.OPENWEATHER_API_KEY;
 const BASE_URL = 'https://api.openweathermap.org/data/2.5/weather';
 
+/**
+ * GET Handler for Weather API
+ * 
+ * Proxies requests to the OpenWeatherMap API to fetch current weather data.
+ * This server-side route hides the API key from the client.
+ * 
+ * @param {Request} request - The incoming request object containing the city parameter.
+ * @returns {Promise<NextResponse>} JSON response with weather data or error message.
+ * 
+ * Query Parameters:
+ * - city: The name of the city to fetch weather for.
+ * 
+ * Behavior:
+ * - Checks for 'city' parameter; returns 400 if missing.
+ * - Checks for API_KEY; returns mock data if missing (development mode).
+ * - Fetches data from OpenWeatherMap API.
+ * - Normalizes the response to match the application's `WeatherData` interface.
+ * - Handles 404 errors (City not found) and other API errors gracefully.
+ */
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const city = searchParams.get('city');

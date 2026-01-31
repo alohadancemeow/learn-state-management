@@ -6,6 +6,12 @@ import WeatherCard from './WeatherCard';
 
 const { Title, Text } = Typography;
 
+/**
+ * Constant defining the global zones and their representative cities.
+ * Used to map specific cities to display in the global highlights section.
+ * 
+ * @const {Array<{zone: string, city: string}>}
+ */
 const ZONES = [
   { zone: 'Asia', city: 'Bangkok' },
   { zone: 'Europe', city: 'London' },
@@ -13,6 +19,12 @@ const ZONES = [
   { zone: 'Australia', city: 'Sydney' },
 ];
 
+/**
+ * TodayWeather Component
+ * 
+ * Displays a grid of weather cards representing global highlights.
+ * It iterates through the ZONES constant to render a WeatherCard for each zone's representative city.
+ */
 const TodayWeather: React.FC = () => {
   return (
     <div style={{ marginBottom: 32 }}>

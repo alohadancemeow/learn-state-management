@@ -8,16 +8,39 @@ import { HeartOutlined, HeartFilled, ReloadOutlined } from '@ant-design/icons';
 
 const { Title } = Typography;
 
+/**
+ * Props for the WeatherCard component.
+ * 
+ * @interface WeatherCardProps
+ * @property {string} city - The name of the city to display weather for.
+ */
 interface WeatherCardProps {
   city: string;
 }
 
+/**
+ * WeatherCard Component
+ * 
+ * Displays current weather information for a specific city.
+ * 
+ * Features:
+ * - Uses `useAtomValue` with `weatherFamilyLoadable` to fetch and subscribe to weather data.
+ * - Handles loading, error, and success states internally.
+ * - Allows toggling the city as a "favorite" (persisted via `favoriteCitiesAtom`).
+ * 
+ */
 const WeatherCard: React.FC<WeatherCardProps> = ({ city }) => {
+  // Subscribe to the loadable atom for this specific city
   const weatherLoadable = useAtomValue(weatherFamilyLoadable(city));
+  
+  // Access and update the list of favorite cities
   const [favorites, setFavorites] = useAtom(favoriteCitiesAtom);
 
   const isFavorite = favorites.includes(city);
 
+  /**
+   * Toggles the current city in the favorites list.
+   */
   const toggleFavorite = () => {
     if (isFavorite) {
       setFavorites(favorites.filter(c => c !== city));
@@ -26,6 +49,7 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ city }) => {
     }
   };
 
+  // Render Loading State
   if (weatherLoadable.state === 'loading') {
     return (
       <Card style={{ width: '100%', marginBottom: 16, minHeight: 200, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -36,6 +60,7 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ city }) => {
     );
   }
 
+  // Render Error State
   if (weatherLoadable.state === 'hasError') {
     return (
       <Card style={{ width: '100%', marginBottom: 16 }}>
@@ -54,6 +79,7 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ city }) => {
     );
   }
 
+  // Render Success State
   const weather = weatherLoadable.data;
   if (!weather) return null;
 
